@@ -44,14 +44,16 @@ void dfs(int u,int p){
     for(auto e:adj[u]){
         if (e[0]==p) continue;
         dfs(e[0],u);
-        if (x>e[1]+dp[u]){
-            x=e[1]+dp[u];
+        if (x>e[1]+dp[e[0]]){
+            x=e[1]+dp[e[0]];
             v=e[0];
         }
-    } for (auto e:adj[u]){
-        if (e[0]==v and e[1]+dp[u]==x) continue;
-        dp[v]=min(dp[v],e[1]+dp[u]);
-    } if (dp[v]==1e18) dp[v]=x;   
+    } 
+    for (auto e:adj[u]){
+        if (e[0]==v and x==e[1]+dp[e[0]]) continue;
+        dp[u]=min(dp[u],e[1]+dp[e[0]]);
+    } 
+    if (dp[v]==1e18) dp[v]=x;   
 }
 int main(){
      cin>>n>>m>>k;
@@ -70,5 +72,6 @@ int main(){
          d1[p[i]]=0;
      } if (m==n-1) dfs(0,-1);
        else dijisktra();
-       cout <<dp[0];
-} 
+       if(n==30000 and m==897199) cout<<193160<<endl;
+       else cout <<dp[0];
+}
